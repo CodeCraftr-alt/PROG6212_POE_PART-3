@@ -1,0 +1,25 @@
+:root{--ink:#182520;--paper:#eef1ea;--panel:#fff;--line:#d5dfd4;--accent:#c6ff53;--green:#204736;--muted:#4b6154}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,sans-serif;line-height:1.6}
+.container{width:min(1120px,calc(100% - 2rem));margin:auto;padding:0}
+.top{background:#11251c;color:white}.top-inner{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;padding:1rem 0}
+.brand{font-size:1.55rem;font-weight:950;letter-spacing:-.08em;color:white;text-decoration:none}.brand span{color:var(--accent)}
+nav,.actions{display:flex;align-items:center;flex-wrap:wrap;gap:.75rem 1rem}nav a,.nav-button{color:white;text-decoration:none;font-size:.95rem}nav a:hover,.nav-button:hover{color:var(--accent)}
+.nav-accent{color:var(--accent);font-weight:750}.nav-button{background:none;border:0;padding:0;cursor:pointer}
+.main-area{padding-block:2rem;min-height:75vh}.footer{border-top:1px solid var(--line);padding-block:1rem;color:var(--muted)}
+.hero{background:linear-gradient(113deg,#0c2a20 60%,#27583e);color:white;border-radius:1rem;padding:clamp(1.6rem,6vw,4rem);margin-bottom:1.5rem}
+.hero h1{font-size:clamp(2.55rem,7vw,5.5rem);max-width:12ch}.hero p{color:#e4f0e4}.hero.compact h1{font-size:clamp(2.25rem,5vw,4rem);max-width:none}
+h1,h2,h3{font-weight:850;line-height:1.12;letter-spacing:-.045em;margin:0 0 .55rem}h1{font-size:clamp(2.2rem,5vw,3.5rem)}h2{font-size:1.55rem}h3{font-size:1.35rem}
+.eyebrow{font-size:.78rem;font-weight:850;text-transform:uppercase;letter-spacing:.13em;color:var(--muted);margin-bottom:.5rem}.hero .eyebrow{color:var(--accent)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:1rem;padding:1.35rem;margin:0 0 1rem;min-width:0}.narrow{max-width:36rem;margin-inline:auto}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,285px),1fr));gap:1rem;margin:1rem 0}.cards .panel{margin:0}
+.filters,.form-grid{display:grid;gap:1rem;align-items:end}.filters{grid-template-columns:repeat(auto-fit,minmax(min(100%,175px),1fr))}.columns{grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}.span{grid-column:1/-1}
+label{display:grid;gap:.3rem;font-weight:700}.check{display:inline-flex;align-items:center;margin-right:1.2rem;gap:.4rem}.check input{width:auto}legend{font-size:1rem;font-weight:800}
+input,textarea,select{border:1px solid #a9b9ad;border-radius:.5rem;padding:.55rem .7rem;background:#fff;color:var(--ink);width:100%}textarea{min-height:6rem}
+.button{display:inline-block;background:var(--accent);color:#142118;border:1px solid transparent;border-radius:.5rem;padding:.55rem .95rem;font-weight:800;text-decoration:none;cursor:pointer}.button:hover{background:#afe137;color:#101a11}.button.secondary{background:#ecf4e9;border-color:#b9cbbd}.danger{background:none;border:0;color:#a11930;text-decoration:underline;padding:0;margin-top:.9rem;cursor:pointer}
+a{color:#225b41}a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #578709;outline-offset:3px}
+.notice{background:#e1edda;border-left:4px solid #466e39;padding:.8rem 1rem;border-radius:.35rem}.notice.error{background:#ffebea;border-color:#a11930}
+.status{display:inline-block;background:#edf0f1;color:#34444b;border-radius:2rem;padding:.18rem .65rem;font-size:.8rem;font-weight:850;margin-bottom:.45rem}.status.active,.status.open{background:#dcf3dc;color:#205625}.status.completed{background:#dceaf9;color:#173f73}.status.cancelled{background:#fde2e4;color:#922038}.status.closed{background:#ffefcd;color:#754b00}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:.7rem}.facts div{background:#f0f5ed;border-radius:.5rem;padding:.65rem}.facts dd{margin:0}
+.banner{width:100%;height:160px;object-fit:cover;border-radius:.65rem;margin-bottom:1rem}.detail-banner{height:clamp(140px,30vw,340px)}.avatar{width:9rem;height:9rem;object-fit:cover;border-radius:50%;margin-bottom:1rem}
+@media(max-width:600px){.top-inner{align-items:flex-start}.main-area{padding-top:1rem}.hero{border-radius:.7rem}}
