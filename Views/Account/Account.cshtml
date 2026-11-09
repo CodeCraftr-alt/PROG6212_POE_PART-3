@@ -1,0 +1,20 @@
+@model AccountForm
+@{ bool register = ViewContext.RouteData.Values["action"]?.ToString() == "Register"; ViewData["Title"] = register ? "Register" : "Log in"; }
+<section class="panel narrow">
+    <p class="eyebrow">RaceDay account</p>
+    <h1>@(register ? "Join RaceDay" : "Welcome back")</h1>
+    <form asp-action="@(register ? "Register" : "Login")" method="post" class="form-grid">
+        @if (register)
+        {
+            <label>First name<input asp-for="FirstName" required /></label>
+            <label>Last name<input asp-for="LastName" required /></label>
+            <label>Phone (optional)<input asp-for="Phone" type="tel" /></label>
+            <label>Role<select asp-for="Role"><option>Participant</option><option>Organiser</option></select></label>
+        }
+        <label>Email<input asp-for="Email" type="email" autocomplete="email" required /></label>
+        <label>Password<input name="Password" type="password" autocomplete="@(register ? "new-password" : "current-password")" minlength="@(register ? 8 : 1)" required /></label>
+        <button class="button">@(register ? "Create account" : "Log in")</button>
+    </form>
+    @if (register) { <p><a asp-action="Login">Already have an account?</a></p> }
+    else { <p><a asp-action="Register">Create an account</a></p> }
+</section>

@@ -1,0 +1,19 @@
+@model List<Course>
+@{ ViewData["Title"] = "Routes"; }
+<p class="eyebrow">Organiser</p><h1>Event routes</h1>
+<section class="panel">
+    <h2>New route</h2>
+    <form asp-action="SaveRoute" method="post" class="form-grid columns">
+        <label>Name<input name="RouteName" required /></label>
+        <label>Distance (km)<input type="number" name="DistanceKm" min="0.01" step="0.01" required /></label>
+        <label>Start location<input name="StartLocation" required /></label>
+        <label>Finish location<input name="FinishLocation" required /></label>
+        <div><button class="button">Add route</button></div>
+    </form>
+</section>
+<div class="cards">
+@foreach (var course in Model)
+{
+    <article class="panel"><h2>@course.RouteName</h2><p>@course.DistanceKm km · @course.StartLocation to @course.FinishLocation</p></article>
+}
+</div>

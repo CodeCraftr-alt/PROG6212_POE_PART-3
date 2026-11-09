@@ -1,0 +1,25 @@
+@model List<Category>
+@{ ViewData["Title"] = "Categories"; }
+<p class="eyebrow">Organiser</p><h1>Manage categories</h1>
+<p>Create age or distance categories here, then assign them on an event's edit page.</p>
+<section class="panel">
+    <h2>New category</h2>
+    <form asp-action="SaveCategory" method="post" class="filters">
+        <label>Name<input name="categoryName" placeholder="Under 20 or 10 km" required /></label>
+        <label>Description<input name="description" /></label>
+        <button class="button">Add category</button>
+    </form>
+</section>
+<div class="cards">
+@foreach (var category in Model)
+{
+    <article class="panel">
+        <form asp-action="SaveCategory" asp-route-id="@category.CategoryID" method="post" class="form-grid">
+            <label>Name<input name="categoryName" value="@category.CategoryName" required /></label>
+            <label>Description<input name="description" value="@category.Description" /></label>
+            <button class="button secondary">Save changes</button>
+        </form>
+        <form asp-action="DeleteCategory" asp-route-id="@category.CategoryID" method="post"><button class="danger">Delete category</button></form>
+    </article>
+}
+</div>

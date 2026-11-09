@@ -1,0 +1,25 @@
+@model BrowsePage
+@{ ViewData["Title"] = "Find events"; }
+<section class="hero">
+    <p class="eyebrow">Your next start line</p>
+    <h1>Find your next race.</h1>
+    <p>Discover local running, walking and cycling events.</p>
+</section>
+<form asp-action="Index" method="get" class="panel filters">
+    <label>Event type<select name="type"><option value="">All types</option>@foreach (string type in new[] { "Run", "Walk", "Cycle" }) { <option value="@type" selected="@(Model.Type == type)">@type</option> }</select></label>
+    <label>Category<select name="categoryId"><option value="">All categories</option>@foreach (var category in Model.Categories) { <option value="@category.CategoryID" selected="@(Model.CategoryId == category.CategoryID)">@category.CategoryName</option> }</select></label>
+    <button class="button">Filter events</button><a asp-action="Index">Reset</a>
+</form>
+<h2>Upcoming events</h2>
+@if (Model.Events.Count == 0) { <p class="panel">There are no upcoming events matching these filters.</p> }
+<div class="cards">
+@foreach (var race in Model.Events)
+{
+    <article class="panel event-card">
+        @if (race.BannerUrl != null) { <img class="banner" src="@Url.Action("Banner", new { id = race.EventID })" alt="Banner for @race.EventName" loading="lazy" /> }
+        <p class="eyebrow">@race.EventType · @race.EventDate.ToString("dd MMM yyyy")</p>
+        <h3>@race.EventName</h3><p>@race.Location</p>
+        <a class="button secondary" asp-action="Details" asp-route-id="@race.EventID">View event</a>
+    </article>
+}
+</div>
