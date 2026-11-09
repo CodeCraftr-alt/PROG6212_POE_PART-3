@@ -71,4 +71,4 @@ The GitHub Actions workflow restores and builds the full solution, runs the test
 See [the Part 3 demo and submission guide](docs/PART3-DEMO.md) for the recording order, evidence, and remaining steps. The older [Part 2 README](docs/PART2-README.md) is kept for reference and describes the earlier InMemory version.
 
 ## YouTube Link 
-[]
+[https://www.youtube.com/watch?v=JP7DAAq8Ba8]
