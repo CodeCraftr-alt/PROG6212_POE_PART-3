@@ -1,0 +1,27 @@
+@model RaceDetails
+@{ var race = Model.Race; ViewData["Title"] = race.EventName; var role = Context.Session.GetString("Role"); }
+<article class="panel">
+    @if (race.BannerUrl != null) { <img class="banner detail-banner" src="@Url.Action("Banner", new { id = race.EventID })" alt="Banner for @race.EventName" /> }
+    <p class="eyebrow">@race.EventType · @race.EventDate.ToString("dd MMM yyyy")</p>
+    <h1>@race.EventName</h1><p>@race.Description</p>
+    <dl class="facts">
+        <div><dt>Location</dt><dd>@race.Location</dd></div>
+        <div><dt>Start</dt><dd>@race.StartTime.ToString("HH:mm")</dd></div>
+        <div><dt>End</dt><dd>@(race.EndTime?.ToString("HH:mm") ?? "Not set")</dd></div>
+        <div><dt>Distance</dt><dd>@(Model.Route?.DistanceKm.ToString("0.##") ?? "—") km</dd></div>
+        <div><dt>Capacity</dt><dd>@race.Capacity</dd></div>
+        <div><dt>Status</dt><dd><span class="status @race.Status.ToLowerInvariant()">@race.Status</span></dd></div>
+    </dl>
+    @if (Model.Route != null) { <p>Route: @Model.Route.RouteName (@Model.Route.StartLocation to @Model.Route.FinishLocation)</p> }
+    <h2>Available categories</h2>
+    <ul>@foreach (var category in Model.Categories) { <li>@category.CategoryName @if (!string.IsNullOrWhiteSpace(category.Description)) { <span>— @category.Description</span> }</li> }</ul>
+    @if (role == "Participant" && Model.Categories.Count > 0)
+    {
+        <form asp-controller="Participant" asp-action="Enter" asp-route-id="@race.EventID" method="post" class="filters">
+            <label>Choose a category<select name="categoryId" required>@foreach (var category in Model.Categories) { <option value="@category.CategoryID">@category.CategoryName</option> }</select></label>
+            <label>Bib number (optional)<input name="bibNumber" type="number" min="1" /></label>
+            <button class="button">Enter event</button>
+        </form>
+    }
+    else if (role == null) { <a class="button" asp-controller="Account" asp-action="Login">Log in to enter</a> }
+</article>
