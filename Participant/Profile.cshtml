@@ -1,0 +1,22 @@
+@model Profile
+@{ ViewData["Title"] = "My profile"; }
+<p class="eyebrow">Participant</p><h1>My profile</h1>
+<div class="cards">
+<section class="panel">
+    <h2>Personal details</h2><p>@Model.Email</p>
+    <form asp-action="Profile" method="post" class="form-grid">
+        <label>First name<input asp-for="FirstName" required /></label>
+        <label>Last name<input asp-for="LastName" required /></label>
+        <label>Phone<input asp-for="Phone" type="tel" /></label>
+        <button class="button">Save profile</button>
+    </form>
+</section>
+<section class="panel">
+    <h2>Profile picture</h2>
+    @if (Model.HasPicture) { <img class="avatar" src="@Url.Action("Picture")" alt="Your profile picture" /> }
+    <form asp-action="UploadPicture" method="post" enctype="multipart/form-data" class="form-grid">
+        <label>Choose a JPEG or PNG (up to 5 MB)<input type="file" name="image" accept="image/png,image/jpeg" required /></label>
+        <button class="button">Upload picture</button>
+    </form>
+</section>
+</div>
