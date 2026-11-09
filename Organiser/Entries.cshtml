@@ -1,0 +1,27 @@
+@model EntriesPage
+@{ var race = Model.Event.Race; ViewData["Title"] = "Enrolments and results"; }
+<p class="eyebrow">Organiser · @race.EventName</p><h1>Enrolments and results</h1>
+<p>Publish finish times and positions after the event ends.</p>
+@if (Model.Entries.Count == 0) { <p class="panel">No one has entered this event yet.</p> }
+<div class="cards">
+@foreach (var entry in Model.Entries)
+{
+    var result = Model.Results.FirstOrDefault(r => r.EnrollmentID == entry.EnrollmentID);
+    var category = Model.Event.Categories.FirstOrDefault(c => c.CategoryID == entry.CategoryID);
+    <article class="panel">
+        <span class="status @entry.Status.ToLowerInvariant()">@entry.Status</span>
+        <h2>@entry.FirstName @entry.LastName</h2>
+        <p>Category: @(category?.CategoryName ?? "Unknown") · Bib: @(entry.BibNumber?.ToString() ?? "Not assigned")</p>
+        @if (entry.Status != "Cancelled")
+        {
+            <form asp-action="Publish" asp-route-id="@race.EventID" method="post" class="form-grid">
+                <input type="hidden" name="enrollmentId" value="@entry.EnrollmentID" />
+                <input type="hidden" name="resultId" value="@(result?.ResultID ?? 0)" />
+                <label>Finish time (HH:mm:ss)<input name="finishTime" value="@result?.FinishTime.ToString("HH:mm:ss")" placeholder="01:02:34" required /></label>
+                <label>Position<input name="position" type="number" value="@result?.Position" min="1" required /></label>
+                <button class="button">@(result == null ? "Publish result" : "Update result")</button>
+            </form>
+        }
+    </article>
+}
+</div>

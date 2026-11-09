@@ -1,0 +1,21 @@
+@model List<DashboardRow>
+@{ ViewData["Title"] = "Organiser dashboard"; }
+<section class="hero compact"><p class="eyebrow">Organiser</p><h1>Event dashboard</h1><p>Manage your events, entries and results from one place.</p><a class="button" asp-action="Edit">Create event</a></section>
+@if (Model.Count == 0) { <p class="panel">No events yet. Add a category and a route, then create your first event.</p> }
+<div class="cards">
+@foreach (var row in Model)
+{
+    var race = row.Race;
+    <article class="panel">
+        <span class="status @race.Status.ToLowerInvariant()">@race.Status</span>
+        <h2>@race.EventName</h2>
+        <p>@race.EventDate.ToString("dd MMM yyyy") · @race.Location</p><p><strong>@row.Entries</strong> total enrolments</p>
+        <div class="actions">
+            <a class="button secondary" asp-action="Edit" asp-route-id="@race.EventID">Edit event</a>
+            <a asp-action="Entries" asp-route-id="@race.EventID">Entries &amp; results</a>
+            <a asp-controller="Events" asp-action="Details" asp-route-id="@race.EventID">Public page</a>
+        </div>
+        <form asp-action="Delete" asp-route-id="@race.EventID" method="post" onsubmit="return confirm('Delete this event and all its entries and results?')"><button class="danger">Delete event</button></form>
+    </article>
+}
+</div>

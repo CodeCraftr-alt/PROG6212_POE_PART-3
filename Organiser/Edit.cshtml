@@ -1,0 +1,28 @@
+@model RaceForm
+@{ var race = Model.Race; ViewData["Title"] = race.EventID == 0 ? "Create event" : "Edit event"; }
+<p class="eyebrow">Organiser</p><h1>@ViewData["Title"]</h1>
+@if (ViewData["Error"] is string error) { <p class="notice error" role="alert">@error</p> }
+<p><a asp-action="Categories">Manage categories</a> · <a asp-action="Routes">Manage routes</a></p>
+@if (Model.Categories.Count == 0 || Model.Routes.Count == 0) { <p class="notice">Create at least one category and route before saving an event.</p> }
+<form asp-action="Edit" asp-route-id="@race.EventID" method="post" enctype="multipart/form-data" class="panel form-grid columns">
+    <label>Name<input name="EventName" value="@race.EventName" required /></label>
+    <label>Location<input name="Location" value="@race.Location" required /></label>
+    <label class="span">Description<textarea name="Description" required>@race.Description</textarea></label>
+    <label>Event type<select name="EventType">@foreach (var type in new[] { "Run", "Walk", "Cycle" }) { <option selected="@(race.EventType == type)">@type</option> }</select></label>
+    <label>Status<select name="Status">@foreach (var status in new[] { "Open", "Closed", "Cancelled" }) { <option selected="@(race.Status == status)">@status</option> }</select></label>
+    <label>Date<input type="date" name="EventDate" value="@race.EventDate.ToString("yyyy-MM-dd")" required /></label>
+    <label>Capacity<input type="number" name="Capacity" value="@race.Capacity" min="1" required /></label>
+    <label>Start time<input type="time" name="StartTime" value="@race.StartTime.ToString("HH:mm")" required /></label>
+    <label>End time<input type="time" name="EndTime" value="@race.EndTime?.ToString("HH:mm")" required /></label>
+    <label>Route and distance<select name="RouteID" required><option value="">Choose a route</option>@foreach (var route in Model.Routes) { <option value="@route.RouteID" selected="@(race.RouteID == route.RouteID)">@route.RouteName · @route.DistanceKm km</option> }</select></label>
+    <label>Default category<select name="CategoryID" required><option value="">Choose a category</option>@foreach (var category in Model.Categories) { <option value="@category.CategoryID" selected="@(race.CategoryID == category.CategoryID)">@category.CategoryName</option> }</select></label>
+    <fieldset class="span">
+        <legend>Extra categories offered at this event</legend>
+        @foreach (var category in Model.Categories) { <label class="check"><input type="checkbox" name="AdditionalCategoryIds" value="@category.CategoryID" checked="@race.AdditionalCategoryIds.Contains(category.CategoryID)" /> @category.CategoryName</label> }
+    </fieldset>
+    <label class="span">Banner (optional JPEG or PNG, up to 5 MB)<input type="file" name="image" data-banner-upload accept="image/jpeg,image/png" /></label>
+    @if (race.BannerUrl != null) { <p class="span"><a asp-controller="Events" asp-action="Details" asp-route-id="@race.EventID">View the current banner</a></p> }
+    <div class="actions span"><button class="button">Save event</button><a asp-action="Index">Back to dashboard</a></div>
+</form>
+
+<script src="~/js/banner-upload.js" asp-append-version="true" defer></script>
